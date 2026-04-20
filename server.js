@@ -84,6 +84,25 @@ app.post("/merge", (req, res) => {
   res.json(target);
 });
 
+// --- NEW ENDPOINT: user registration ------------------------------
+// Introduced in this PR. Two problems XploitScan should flag:
+//   1. SQL injection — still concatenating user input into SQL
+//   2. MD5 password hash — see hashPassword() above
+app.post("/register", (req, res) => {
+  const { email, password } = req.body;
+  const hashed = hashPassword(password);
+  const query =
+    "INSERT INTO users (email, password) VALUES ('" +
+    email +
+    "', '" +
+    hashed +
+    "')";
+  db.run(query, (err) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ token: generateSessionToken() });
+  });
+});
+
 app.listen(3000, () => {
   console.log("Demo app listening on :3000 — do not expose this anywhere real.");
 });
