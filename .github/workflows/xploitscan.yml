@@ -1,0 +1,21 @@
+name: Security Scan
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bgage72590/xploitscan-action@v1
+        with:
+          # Deliberately NOT failing the build — this repo is a demo,
+          # we want every PR to surface findings, not block.
+          fail-on: none
