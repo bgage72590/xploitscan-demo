@@ -33,7 +33,7 @@ jobs:
           fail-on: critical
 ```
 
-That's it. 158 security rules, SARIF output into the Security tab, and a PR comment you can't miss — out of the box, no config.
+That's it. 30 free rules out of the box (all 223 with a paid API key), SARIF output into the Security tab, and a PR comment you can't miss — no config.
 
 [**Try it on your own repo →**](https://xploitscan.com)
 
